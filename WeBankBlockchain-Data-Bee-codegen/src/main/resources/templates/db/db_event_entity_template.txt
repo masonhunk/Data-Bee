@@ -11,11 +11,13 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import org.hibernate.annotations.UpdateTimestamp;
+
+import com.webank.blockchain.data.bee.db.entity.IdEntity;
+
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
 import lombok.experimental.Accessors;
-import com.webank.webasebee.db.entity.IdEntity;
 
 @SuppressWarnings("serial")
 @Data

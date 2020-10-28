@@ -7,6 +7,9 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Index;
 import javax.persistence.Table;
+
+import com.webank.blockchain.data.bee.db.entity.IdEntity;
+
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
@@ -15,7 +18,6 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import org.hibernate.annotations.UpdateTimestamp;
 import java.util.Date;
-import com.webank.webasebee.db.entity.IdEntity;
 
 @SuppressWarnings("serial")
 @Data

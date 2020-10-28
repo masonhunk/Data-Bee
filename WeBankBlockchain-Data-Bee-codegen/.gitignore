@@ -33,5 +33,5 @@ config/*
 src/main/resources/*.properties
 
 ## contracts ##
-src/main/java/com/webank/blockchain/
 src/main/java/org/
+src/main/java/com/webank/blockchain/wecredit

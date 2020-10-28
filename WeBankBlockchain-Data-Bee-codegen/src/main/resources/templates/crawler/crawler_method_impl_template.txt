@@ -21,15 +21,15 @@ import org.springframework.util.CollectionUtils;
 
 import ${group}.${projectName}.crawler.face.BcosMethodCrawlerInterface;
 import org.springframework.beans.factory.annotation.Autowired;
-import com.webank.webasebee.common.tools.AddressUtils;
-import com.webank.webasebee.common.tools.BigIntegerUtils;
-import com.webank.webasebee.common.tools.BoolUtils;
-import com.webank.webasebee.common.tools.BytesUtils;
-import com.webank.webasebee.common.tools.JacksonUtils;
-import com.webank.webasebee.common.tools.MethodUtils;
+import com.webank.blockchain.data.bee.common.tools.AddressUtils;
+import com.webank.blockchain.data.bee.common.tools.BigIntegerUtils;
+import com.webank.blockchain.data.bee.common.tools.BoolUtils;
+import com.webank.blockchain.data.bee.common.tools.BytesUtils;
+import com.webank.blockchain.data.bee.common.tools.JacksonUtils;
+import com.webank.blockchain.data.bee.common.tools.MethodUtils;
 import lombok.extern.slf4j.Slf4j;
 import ${contractPackName}.${contractName};
-import ${group}.webasebee.common.bo.data.MethodBO;
+import com.webank.blockchain.data.bee.common.bo.data.MethodBO;
 import ${group}.${projectName}.generated.bo.method.${methodName}BO;
 
 @Slf4j

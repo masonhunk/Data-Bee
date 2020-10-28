@@ -3,7 +3,7 @@
  */
 package ${group}.${projectName}.generated.bo.method;
 
-import com.webank.webasebee.common.bo.data.MethodBO;
+import com.webank.blockchain.data.bee.common.bo.data.MethodBO;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
