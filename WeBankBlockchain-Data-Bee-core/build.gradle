@@ -1,6 +1,6 @@
 bootJar {
     destinationDir file('dist')
-    archiveName rootProject.name + '-' + project.name + version + '.jar'
+    archiveName project.name + version + '.jar'
 
     doLast {
         copy {

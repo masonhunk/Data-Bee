@@ -289,8 +289,6 @@ LOG_INFO "group: $group"
 
 cd ..
 checkout_version
-git fetch
-git pull
 if [ $? == 0 ];then
 	LOG_INFO "git pull success"
 else
@@ -371,7 +369,7 @@ bash gradlew clean :$CODEGEN:bootJar
 LOG_INFO "$CODEGEN build done"
 
 # run
-cd $BUILD_DIR
+cd $CODEGEN/$BUILD_DIR
 chmod +x WeBankBlockchain*
 $JAVACMD -jar WeBankBlockchain*
 LOG_INFO "$CODEGEN generate done."
@@ -384,6 +382,7 @@ cp -f  $BASE_DIR/$CERT_DIR/ca.crt $RESOURCE_DIR/
 # cp -f  ../$CERT_DIR/client.keystore $RESOURCE_DIR/
 cp -f  $BASE_DIR/$CERT_DIR/node.crt $RESOURCE_DIR/
 cp -f  $BASE_DIR/$CERT_DIR/node.key $RESOURCE_DIR/
+cp -f  $BASE_DIR/$CERT_DIR/sdk* $RESOURCE_DIR/
 
 LOG_INFO "copy certs done."
 
@@ -410,8 +409,8 @@ LOG_INFO "$PROJECT_NAME build done"
 if [ "$exec" == "run" ];then
 LOG_INFO "start to run $BB"
 cd $CORE/$BUILD_DIR
-chmod +x WeBASE*
-$JAVACMD -jar WeBASE*
+chmod +x WeBankBlockchain*
+$JAVACMD -jar WeBankBlockchain*
 fi
 
 
