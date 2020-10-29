@@ -1,11 +1,10 @@
 #!/usr/bin/env bash
 LANG=zh_CN.UTF-8
-BRANCH_NAME="master"
 
 ##############################################################################
 ##
-##  WeBASE-Codegen-Monkey start up script for UN*X.
-##  WeBASE-Codegen-Monkey is an automatic code Generator. 
+##  WeBankBlockchain-Data-Bee start up script for UN*X.
+##  WeBankBlockchain-Data-Bee is an automatic code Generator. 
 ##
 ##  created by jiayumao
 ##
@@ -106,21 +105,24 @@ RESOURCE_DIR="src/main/resources"
 JAVA_CODE_DIR="src/main/java"
 BUILD_DIR="dist"
 
-BMP=".tools"
-BM="WeBASE-Codegen-Monkey"
-BB="WeBASE-Collect-Bee"
-BBCOMMON="WeBASE-Collect-Bee-common"
-BBC="WeBASE-Collect-Bee-core"
+PROJECT_NAME="WeBankBlockchain-Data-Bee"
+CODEGEN="${PROJECT_NAME}-codegen"
+COMMON="${PROJECT_NAME}-common"
+CORE="${PROJECT_NAME}-core"
+DB="${PROJECT_NAME}-db"
 BASE_DIR=`pwd`
 LOG_INFO "work dir is $BASE_DIR"
 
 #### system tables
-ENTITY_DIR="$BB/WeBASE-Collect-Bee-db/src/main/java/com/webank/webasebee/db/entity"
-ACCOUNT_INFO_TABLE="account_info"
+ENTITY_DIR="$DB/src/main/java/com/webank/blockchain/data/bee/db/entity"
 BLOCK_DETAIL_INFO_TABLE="block_detail_info"
+BLOCK_RAW_DATA_TABLE="block_raw_data"
 BLOCK_TASK_POOL_TABLE="block_task_pool"
 BLOCK_TX_DETAIL_INFO_TABLE="block_tx_detail_info"
-
+CONTRACT_INFO_TABLE="contract_info"
+DEPLOYED_ACCOUNT_INFO="deployed_account_info"
+TX_RAW_DATA="tx_raw_data"
+TX_RECEIPT_RAW_DATA="tx_receipt_raw_data"
 
 #### check the config file exists.
 if [ -f "$APPLICATION_FILE" ];then
@@ -285,60 +287,28 @@ LOG_INFO "contractPath: $contractPath"
 group=$(echo ${system_group} | tr '.' '/')
 LOG_INFO "group: $group"
 
-
-if [ -d "$BMP/$BM" ];then
-  LOG_INFO "Monkey already exist."
-  cd $BMP/$BM
-  ## rm cached files
-  rm -rf src/main/java/com/webank/blockchain/
-  rm -rf src/main/java/org/
-  git fetch
-  git reset --hard HEAD
-  git checkout $BRANCH_NAME
-  git pull
-  if [ $? == 0 ];then
-  	LOG_INFO "git pull success"
-  else
-     LOG_ERROR "git pull fail"
-     exit 1;
-  fi
-else
-  LOG_INFO "Begin to download Monkey ..."
-  mkdir -p $BMP
-  cd $BMP
-  git clone https://github.com/WeBankFinTech/$BM.git
-  cd $BM
-  git checkout -b $BRANCH_NAME origin/$BRANCH_NAME
-fi
+cd ..
 checkout_version
-
-cd $BASE_DIR
-
-if [ -d "$BB" ];then
-  LOG_INFO "Bee already exist."
-  cd $BB
-    ## rm cached files
-  rm -rf src/main/java/com/webank/bcosbee/generated
-  rm -rf src/main/java/com/webank/webasebee/generated
-  rm -rf src/main/java/com/webank/blockchain/
-  rm -rf src/main/java/org
-  git fetch
-  git reset --hard HEAD
-  git checkout $BRANCH_NAME
-  git pull
-  if [ $? == 0 ];then
-  	LOG_INFO "git pull success"
-  else
-     LOG_ERROR "git pull fail"
-     exit 1;
-  fi
+git fetch
+git pull
+if [ $? == 0 ];then
+	LOG_INFO "git pull success"
 else
-  LOG_INFO "Begin to download Bee ..."
-  git clone https://github.com/WeBankFinTech/$BB.git
-  cd $BB
-  git checkout -b $BRANCH_NAME origin/$BRANCH_NAME
+	LOG_ERROR "git pull fail"
+    exit 1;
 fi
-checkout_version
+
+## rm cached files
+cd $CODEGEN
+rm -rf src/main/java/com/webank/blockchain/demo/
+rm -rf src/main/java/org/
+
+cd ..
+## rm cached files
+rm -rf src/main/java/com/webank/blockchain/data/bee/generated
+rm -rf src/main/java/com/webank/blockchain/data/bee/generated
+rm -rf src/main/java/com/webank/blockchain/demo
+rm -rf src/main/java/org
 
 # replace table name check
 LOG_INFO "Replace table name check."
@@ -348,30 +318,42 @@ if [ ! -z "${system_tablePrefix//[[:blank:]]/}" ] || [ ! -z "${system_tablePostf
   prefix=${system_tablePrefix//[[:blank:]]}
   postfix=${system_tablePostfix//[[:blank:]]/}
   LOG_INFO "Replacing table name, tablePrefix=$prefix, tablePostfix=$postfix"
-  newAccountInfoTable="${prefix}${ACCOUNT_INFO_TABLE}${postfix}"
-  newBlockDetailInfoTable="${prefix}${BLOCK_DETAIL_INFO_TABLE}${postfix}"
-  newBlockTaskPoolTable="${prefix}${BLOCK_TASK_POOL_TABLE}${postfix}"
-  newBlockTxDetailInfoTable="${prefix}${BLOCK_TX_DETAIL_INFO_TABLE}${postfix}"
+  NEW_BLOCK_DETAIL_INFO_TABLE="${BLOCK_DETAIL_INFO_TABLE}"
+  NEW_BLOCK_RAW_DATA_TABLE="${BLOCK_RAW_DATA_TABLE}"
+  NEW_BLOCK_TASK_POOL_TABLE="${BLOCK_TASK_POOL_TABLE}"
+  NEW_BLOCK_TX_DETAIL_INFO_TABLE="${BLOCK_TX_DETAIL_INFO_TABLE}"
+  NEW_CONTRACT_INFO_TABLE="${CONTRACT_INFO_TABLE}"
+  NEW_DEPLOYED_ACCOUNT_INFO="${DEPLOYED_ACCOUNT_INFO}"
+  NEW_TX_RAW_DATA="${TX_RAW_DATA}"
+  NEW_TX_RECEIPT_RAW_DATA="${TX_RECEIPT_RAW_DATA}"
 
-  cd $BASE_DIR/$ENTITY_DIR
+  cd $BASE_DIR/../$ENTITY_DIR
 
   if [ "$(uname)" == "Darwin" ]; then
-    sed -i "" "s/account_info/$newAccountInfoTable/g" AccountInfo.java
-    sed -i "" "s/block_detail_info/$newBlockDetailInfoTable/g" BlockDetailInfo.java
-    sed -i "" "s/block_task_pool/$newBlockTaskPoolTable/g" BlockTaskPool.java
-    sed -i "" "s/block_tx_detail_info/$newBlockTxDetailInfoTable/g" BlockTxDetailInfo.java
+    sed -i "" "s/$BLOCK_DETAIL_INFO_TABLE/$NEW_BLOCK_DETAIL_INFO_TABLE/g" BlockDetailInfo.java
+    sed -i "" "s/$BLOCK_RAW_DATA_TABLE/$NEW_BLOCK_RAW_DATA_TABLE/g" BlockRawData.java
+    sed -i "" "s/$BLOCK_TASK_POOL_TABLE/$NEW_BLOCK_TASK_POOL_TABLE/g" BlockTaskPool.java
+    sed -i "" "s/$BLOCK_TX_DETAIL_INFO_TABLE/$NEW_BLOCK_TX_DETAIL_INFO_TABLE/g" BlockTxDetailInfo.java
+    sed -i "" "s/$CONTRACT_INFO_TABLE/$NEW_CONTRACT_INFO_TABLE/g" ContractInfo.java
+    sed -i "" "s/$DEPLOYED_ACCOUNT_INFO/$NEW_DEPLOYED_ACCOUNT_INFO/g" DeployedAccountInfo.java
+    sed -i "" "s/$TX_RAW_DATA/$NEW_TX_RAW_DATA/g" TxRawData.java
+    sed -i "" "s/$TX_RECEIPT_RAW_DATA/$NEW_TX_RECEIPT_RAW_DATA/g" TxReceiptRawData.java
   elif [ "$(expr substr $(uname -s) 1 5)" == "Linux" ]; then
-    sed -i "s/account_info/$newAccountInfoTable/g" AccountInfo.java
-    sed -i "s/block_detail_info/$newBlockDetailInfoTable/g" BlockDetailInfo.java
-    sed -i "s/block_task_pool/$newBlockTaskPoolTable/g" BlockTaskPool.java
-    sed -i "s/block_tx_detail_info/$newBlockTxDetailInfoTable/g" BlockTxDetailInfo.java
+    sed -i "s/$BLOCK_DETAIL_INFO_TABLE/$NEW_BLOCK_DETAIL_INFO_TABLE/g" BlockDetailInfo.java
+    sed -i "s/$BLOCK_RAW_DATA_TABLE/$NEW_BLOCK_RAW_DATA_TABLE/g" BlockRawData.java
+    sed -i "s/$BLOCK_TASK_POOL_TABLE/$NEW_BLOCK_TASK_POOL_TABLE/g" BlockTaskPool.java
+    sed -i "s/$BLOCK_TX_DETAIL_INFO_TABLE/$NEW_BLOCK_TX_DETAIL_INFO_TABLE/g" BlockTxDetailInfo.java
+    sed -i "s/$CONTRACT_INFO_TABLE/$NEW_CONTRACT_INFO_TABLE/g" ContractInfo.java
+    sed -i "s/$DEPLOYED_ACCOUNT_INFO/$NEW_DEPLOYED_ACCOUNT_INFO/g" DeployedAccountInfo.java
+    sed -i "s/$TX_RAW_DATA/$NEW_TX_RAW_DATA/g" TxRawData.java
+    sed -i "s/$TX_RECEIPT_RAW_DATA/$NEW_TX_RECEIPT_RAW_DATA/g" TxReceiptRawData.java
   fi
 fi
 
 cd $BASE_DIR
 
 # init config
-cd $BMP/$BM
+cd ../$CODEGEN
 mkdir -p $RESOURCE_DIR/
 cp -f $BASE_DIR/$APPLICATION_FILE $RESOURCE_DIR/
 cp -f $BASE_DIR/$DEF_FILE $RESOURCE_DIR/
@@ -385,28 +367,17 @@ LOG_INFO "copy java contract codes done."
 
 # build
 bash gradlew clean bootJar
-LOG_INFO "$BM build done"
+LOG_INFO "$CODEGEN build done"
 
 # run
 cd $BUILD_DIR
-chmod +x WeBASE*
-$JAVACMD -jar WeBASE*
-LOG_INFO "$BB generate done."
+chmod +x WeBankBlockchain*
+$JAVACMD -jar WeBankBlockchain*
+LOG_INFO "$CODEGEN generate done."
 cd $BASE_DIR
-#rm -rf $BM
+cd ..
 
-cd $BB
-for file in $BASE_DIR/$CONTRACT_DIR/*
-do
-  file=${file##*/}
-  if [[ $file == *.jar ]];
-  then
-    cp -f $BASE_DIR/$CONTRACT_DIR/$file ./libs/
-  fi
-done
-
-
-cd $BBC
+cd $CORE
 mkdir -p $RESOURCE_DIR/
 cp -f  $BASE_DIR/$CERT_DIR/ca.crt $RESOURCE_DIR/
 # cp -f  ../$CERT_DIR/client.keystore $RESOURCE_DIR/
@@ -416,13 +387,13 @@ cp -f  $BASE_DIR/$CERT_DIR/node.key $RESOURCE_DIR/
 LOG_INFO "copy certs done."
 
 
-mkdir -p ../$BBCOMMON/$JAVA_CODE_DIR/$contractPath
+mkdir -p ../$COMMON/$JAVA_CODE_DIR/$contractPath
 for file in $BASE_DIR/$CONTRACT_DIR/*
 do
   file=${file##*/}
   if [[ $file == *.java ]];
   then
-    cp -f $BASE_DIR/$CONTRACT_DIR/$file ../$BBCOMMON/$JAVA_CODE_DIR/$contractPath/
+    cp -f $BASE_DIR/$CONTRACT_DIR/$file ../$COMMON/$JAVA_CODE_DIR/$contractPath/
   fi
 done
 mkdir -p ./$CONTRACT_DIR
@@ -430,14 +401,14 @@ cp -f $BASE_DIR/$CONTRACT_DIR/* ./$CONTRACT_DIR
 LOG_INFO "copy java contract codes done."
 
 
-cd $BASE_DIR/$BB
+cd $BASE_DIR/$CORE
 bash gradlew clean bootJar
 
-LOG_INFO "$BB build done"
+LOG_INFO "$PROJECT_NAME build done"
 
 if [ "$exec" == "run" ];then
 LOG_INFO "start to run $BB"
-cd $BBC/$BUILD_DIR
+cd $CORE/$BUILD_DIR
 chmod +x WeBASE*
 $JAVACMD -jar WeBASE*
 fi
