@@ -366,7 +366,8 @@ cp -f $BASE_DIR/$CONTRACT_DIR/* ./$CONTRACT_DIR
 LOG_INFO "copy java contract codes done."
 
 # build
-bash gradlew clean bootJar
+cd $BASE_DIR/../
+bash gradlew clean :$CODEGEN:bootJar
 LOG_INFO "$CODEGEN build done"
 
 # run
@@ -401,8 +402,8 @@ cp -f $BASE_DIR/$CONTRACT_DIR/* ./$CONTRACT_DIR
 LOG_INFO "copy java contract codes done."
 
 
-cd $BASE_DIR/$CORE
-bash gradlew clean bootJar
+cd $BASE_DIR/../
+bash gradlew clean :$CORE:bootJar
 
 LOG_INFO "$PROJECT_NAME build done"
 
