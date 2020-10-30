@@ -5,7 +5,7 @@ do
     kill -9 $i
 done
 
-for j in $(ps -ef|grep -i `pwd`|grep -i webase-collect-bee|grep -v grep| awk '{print $2}')
+for j in $(ps -ef|grep -i `pwd`|grep -i Data-Bee|grep -v grep| awk '{print $2}')
 do
     kill -9 $j
 done

@@ -2,7 +2,7 @@
 server.port=${port}
 spring.jackson.date-format=yyyy-MM-dd HH:mm:ss
 spring.jackson.time-zone=Asia/Shanghai
-logging.file=webasebee-core.log
+logging.file=databee-core.log
 logging.level.org.hibernate=ERROR 
 logging.level.org.fisco.bcos=ERROR 
 

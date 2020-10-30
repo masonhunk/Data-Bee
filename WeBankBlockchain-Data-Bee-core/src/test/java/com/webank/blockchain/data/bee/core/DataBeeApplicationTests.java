@@ -20,6 +20,6 @@ import org.springframework.test.context.ActiveProfiles;
 
 @SpringBootTest
 @ActiveProfiles("test")
-public class WebaseBeeApplicationTests {
+public class DataBeeApplicationTests {
 
 }

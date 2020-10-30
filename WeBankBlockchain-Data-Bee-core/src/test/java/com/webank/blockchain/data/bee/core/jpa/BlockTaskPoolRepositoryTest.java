@@ -17,10 +17,10 @@ package com.webank.blockchain.data.bee.core.jpa;
 
 import java.util.Date;
 
+import com.webank.blockchain.data.bee.core.DataBeeApplicationTests;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import com.webank.blockchain.data.bee.core.WebaseBeeApplicationTests;
 import com.webank.blockchain.data.bee.db.repository.BlockTaskPoolRepository;
 
 /**
@@ -31,7 +31,7 @@ import com.webank.blockchain.data.bee.db.repository.BlockTaskPoolRepository;
  * @data Apr 8, 2019 5:30:43 PM
  *
  */
-public class BlockTaskPoolRepositoryTest extends WebaseBeeApplicationTests {
+public class BlockTaskPoolRepositoryTest extends DataBeeApplicationTests {
     @Autowired
     private BlockTaskPoolRepository r;
 
