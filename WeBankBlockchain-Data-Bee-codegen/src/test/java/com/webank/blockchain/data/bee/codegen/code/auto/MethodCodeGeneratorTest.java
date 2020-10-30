@@ -18,13 +18,13 @@ package com.webank.blockchain.data.bee.codegen.code.auto;
 import java.io.IOException;
 import java.util.Map;
 
+import com.webank.blockchain.data.bee.codegen.DataBeeCodegenApplicationTests;
 import com.webank.blockchain.data.bee.codegen.code.service.CodeGenerateService;
 import com.webank.blockchain.data.bee.codegen.code.template.face.GenerateParas;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import com.webank.blockchain.data.bee.codegen.WebasemonkeyApplicationTests;
 
 /**
  * MethodCodeGeneratorTest
@@ -34,7 +34,7 @@ import com.webank.blockchain.data.bee.codegen.WebasemonkeyApplicationTests;
  * @data 2018年12月4日 下午4:57:44
  *
  */
-public class MethodCodeGeneratorTest extends WebasemonkeyApplicationTests {
+public class MethodCodeGeneratorTest extends DataBeeCodegenApplicationTests {
 	
 	@Autowired
     private CodeGenerateService codeGenerator;

@@ -22,7 +22,7 @@ import org.fisco.bcos.sdk.abi.wrapper.ABIDefinition.NamedType;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import com.webank.blockchain.data.bee.codegen.WebasemonkeyApplicationTests;
+import com.webank.blockchain.data.bee.codegen.DataBeeCodegenApplicationTests;
 import com.webank.blockchain.data.bee.codegen.tools.JacksonUtils;
 import com.webank.blockchain.data.bee.codegen.vo.FieldVO;
 import com.webank.blockchain.data.bee.codegen.vo.MethodMetaInfo;
@@ -36,7 +36,7 @@ import com.webank.blockchain.data.bee.codegen.vo.MethodMetaInfo;
  * @data Apr 17, 2020 3:27:00 PM
  *
  */
-public class MethodParserTest extends WebasemonkeyApplicationTests {
+public class MethodParserTest extends DataBeeCodegenApplicationTests {
     @Autowired
     private MethodParser methodParser;
 

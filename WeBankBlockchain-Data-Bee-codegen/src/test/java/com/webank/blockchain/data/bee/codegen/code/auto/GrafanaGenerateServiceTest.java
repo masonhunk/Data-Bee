@@ -22,7 +22,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import com.webank.blockchain.data.bee.codegen.WebasemonkeyApplicationTests;
+import com.webank.blockchain.data.bee.codegen.DataBeeCodegenApplicationTests;
 
 /**
  * GrafanaGenerateService
@@ -32,7 +32,7 @@ import com.webank.blockchain.data.bee.codegen.WebasemonkeyApplicationTests;
  * @data Mar 27, 2019 5:42:59 PM
  *
  */
-public class GrafanaGenerateServiceTest extends WebasemonkeyApplicationTests {
+public class GrafanaGenerateServiceTest extends DataBeeCodegenApplicationTests {
     @Autowired
     private GrafanaGenerateService service;
     

@@ -22,7 +22,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import com.webank.blockchain.data.bee.codegen.WebasemonkeyApplicationTests;
+import com.webank.blockchain.data.bee.codegen.DataBeeCodegenApplicationTests;
 
 /**
  * GeneratorTest
@@ -32,7 +32,7 @@ import com.webank.blockchain.data.bee.codegen.WebasemonkeyApplicationTests;
  * @date 2018年11月12日 下午7:51:27
  * 
  */
-public class GeneratorTest extends WebasemonkeyApplicationTests {
+public class GeneratorTest extends DataBeeCodegenApplicationTests {
 
     @SuppressWarnings("rawtypes")
     @Autowired
